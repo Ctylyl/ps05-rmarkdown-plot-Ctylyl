@@ -265,14 +265,58 @@ Let’s look at GDP per capita (*GDP_PC*)
 
 1. (8pt) Make a scatterplot of GDP per capita versus life expectancy by country, using data for 1960. Make the point size dependent on the country size, and color those according to the continent. Feel free to adjust the plot in other ways to make it better. \
 Comment what do you see there. \
+```{r}
+data_1960 <- gapminder %>% 
+  filter(time == 1960) %>% 
+  filter(!is.na(GDP_PC)) %>% 
+  filter(!is.na(lifeExpectancy))
+
+ggplot(data_1960, aes(x = GDP_PC, y = lifeExpectancy, size = totalPopulation)) +
+    geom_point(aes(color = region)) + 
+    labs(x = "GDP per Capita", y = "Life Expectancy by Country in Years",
+         color = "Continents", size = "Total Population") +
+    ggtitle("GDP per Capita versus Life Expectancy by Country in 1960")
+```
+
+Wealthier continents, like Americas, Europe and Oceania had a higher GDP per capita,
+and a higher life expectancy. On the other hand, developing countries normally had
+lower than 60 years of life expectancy.
 
 2. (4pt) Make a similar plot, but this time use 2019 data only. \
+```{r}
+data_2019 <- gapminder %>% 
+  filter(time == 2019) %>% 
+  filter(!is.na(GDP_PC)) %>% 
+  filter(!is.na(lifeExpectancy))
 
+ggplot(data_2019, aes(x = GDP_PC, y = lifeExpectancy, size = totalPopulation)) +
+    geom_point(aes(color = region)) + 
+    labs(x = "GDP per Capita", y = "Life Expectancy by Country in Years",
+         color = "Continents", size = "Total Population") +
+    ggtitle("GDP per Capita versus Life Expectancy by Country in 2019")
+```
 
 3. (6pt) Compare these two plots and comment what do you see. How has world developed through the last 60 years? \
 
+Wealthier continents, like Americas, Europe and Oceania still had a higher GDP per capita,
+and a higher life expectancy after 60 years. However, developing countries had
+an roughly increase of 10 years of life expectancy, adding to over 60 years in many African countries, and
+about 70 years for most Asian countries. This shows that the developing countries had a steady improvement on
+medical services, food and water quality, etc., so that people can live longer.
+
 4. (6pt) Compute the average life expectancy for each continent in 1960 and 2019. Do the results fit with what do you see on the figures? \
 Note: here as *average*I mean just average over countries, ignore the fact that countries are of different size.\
+```{r}
+avg_life_exp_in_1960_and_2016 <- gapminder %>%
+  filter(!is.na(lifeExpectancy)) %>%
+  filter(!is.na(region)) %>% 
+  filter(time == 1960 | time == 2016) %>%
+  group_by(region, time) %>%
+  summarize(avg_life_exp = mean(lifeExpectancy, na.rm = TRUE)) %>% 
+  print()
+```
+The result fits in the relationship in the figure, as developed countries in Oceania, Europe and Americas still
+have higher life expectancy, but developing countries in Africa and Asia are catching up quickly.
 
 5. (8pt) Compute the average LE growth from 1960-2019 across the continents. Show the results in the order of growth. Explain what do you see. \
 Hint: these data (data in long form) is not the simplest to compute growth. But you may want to check out the lag() function. And do not forget to group data by continent when using lag(), otherwise your results will be messed up! See [**https://faculty.washington.edu/otoomet/info201-book/dplyr.html#dplyr-helpers-compute**](https://faculty.washington.edu/otoomet/info201-book/dplyr.html#dplyr-helpers-compute).\
