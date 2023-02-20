@@ -11,9 +11,6 @@ library(tidyverse)
 library(readr)
 options(dplyr.summarize.inform = FALSE)
 ```
-
-# Disclaimer: this serves as a template for you to compose your answer for PS4. It is 100% hardcoded, so error may exists. Please refer to the official spec for a full list of questions and requirements.
-
 # Instructions
 This is a problem set about rmarkdown and plotting (using ggplot). Unlike the previous problem sets, this one does not give you a ready-made GH repo with a code file–it is now your task to create a repo and include your rmarkdown file in there.\
 
@@ -387,3 +384,5 @@ The relative rank in 1960 was 0.0957, and 0.2398 in 2019.
 ---------------------------------------------------------------------
 
 Finally tell us how many hours did you spend on this PS.
+
+6 hours
